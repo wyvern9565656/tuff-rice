@@ -1,0 +1,45 @@
+* {
+    background-color: #e9f8ff;
+    text-color: #0b3a5c;
+}
+
+window {
+    width: 40%;
+    border: 1px;
+    border-color: #ffffff;
+    border-radius: 16px;
+    padding: 16px;
+    background-color: #d7effb;
+}
+
+mainbox {
+    spacing: 10px;
+    children: [inputbar, listview];
+}
+
+inputbar {
+    padding: 9px;
+    border: 1px;
+    border-color: #9bdcf5;
+    border-radius: 10px;
+    children: [prompt, entry];
+}
+
+listview {
+    columns: 1;
+    lines: 8;
+    fixed-height: true;
+    spacing: 4px;
+}
+
+element {
+    padding: 8px;
+    border: 1px;
+    border-color: transparent;
+    border-radius: 9px;
+}
+
+element selected {
+    background-color: #269ed2;
+    text-color: #ffffff;
+}

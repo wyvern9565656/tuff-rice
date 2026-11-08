@@ -1,0 +1,24 @@
+[global]
+    width = (0, 420)
+    height = 150
+    origin = top-right
+    offset = 14x48
+    frame_width = 1
+    frame_color = "#8bd7f4"
+    separator_color = frame
+    font = "Open Sans 11"
+    background = "#e8f8ff"
+    foreground = "#0b3a5c"
+    corner_radius = 12
+    padding = 12
+    horizontal_padding = 14
+    transparency = 3
+
+[urgency_low]
+    timeout = 4
+
+[urgency_normal]
+    timeout = 6
+
+[urgency_critical]
+    timeout = 0

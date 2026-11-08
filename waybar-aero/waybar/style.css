@@ -1,0 +1,395 @@
+/* UltimaDesk - Frutiger Aero */
+
+* {
+  font-family: "Segoe UI", "Noto Sans", "Open Sans", "JetBrainsMono Nerd Font", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+window#waybar {
+  background: transparent;
+  color: #0a3a5a;
+}
+
+/* ---------- vidro das barras ---------- */
+window#waybar.topbar {
+  border-radius: 17px 17px 17px 0;
+  background-image: linear-gradient(to bottom,
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(214, 243, 255, 0.78) 49%,
+    rgba(160, 220, 250, 0.72) 51%,
+    rgba(185, 242, 228, 0.78) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.80);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.90),
+              inset 0 -1px 0 rgba(60, 150, 200, 0.35);
+}
+
+window#waybar.side {
+  border-radius: 0 0 20px 20px;
+  background-image: linear-gradient(to bottom,
+    rgba(185, 242, 228, 0.78) 0%,
+    rgba(214, 243, 255, 0.52) 7%,
+    rgba(160, 220, 250, 0.40) 49%,
+    rgba(160, 220, 250, 0.44) 51%,
+    rgba(185, 242, 228, 0.56) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.80);
+  box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.90),
+              inset -1px 0 0 rgba(60, 150, 200, 0.35);
+}
+
+/* ---------- workspaces (barra lateral) ---------- */
+#workspaces button {
+  min-width: 48px;
+  min-height: 34px;
+  margin: 5px 3px;
+  padding: 0;
+  border-radius: 17px;
+  color: #0a4466;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  background-image: linear-gradient(to bottom,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(255, 255, 255, 0.25) 49%,
+    rgba(90, 190, 255, 0.35) 51%,
+    rgba(140, 240, 215, 0.55) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.90);
+  transition: all 180ms ease;
+}
+
+#workspaces button label {
+  margin-right: 4px;
+}
+
+#workspaces button.empty {
+  opacity: 0.65;
+}
+
+#workspaces button:hover {
+  opacity: 1;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95),
+              0 0 10px rgba(130, 225, 255, 0.90);
+}
+
+#workspaces button.active {
+  opacity: 1;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 70, 120, 0.60);
+  border-color: rgba(255, 255, 255, 1);
+  background-image: linear-gradient(to bottom,
+    rgba(255, 255, 255, 0.90) 0%,
+    rgba(150, 225, 255, 0.55) 49%,
+    rgba(30, 150, 240, 0.90) 51%,
+    rgba(60, 215, 185, 0.95) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95),
+              0 0 10px rgba(110, 220, 255, 0.95);
+}
+
+#workspaces button.urgent {
+  color: #ffffff;
+  background-image: linear-gradient(to bottom,
+    rgba(255, 255, 255, 0.90) 0%,
+    rgba(255, 200, 120, 0.60) 49%,
+    rgba(255, 130, 40, 0.90) 51%,
+    rgba(255, 180, 60, 0.95) 100%);
+}
+
+#workspace-1,
+#workspace-2,
+#workspace-3,
+#workspace-4,
+#workspace-5,
+#workspace-6,
+#workspace-7,
+#workspace-8,
+#workspace-9,
+#workspace-10 {
+  min-width: 64px;
+  min-height: 34px;
+  margin: 5px 0;
+  padding: 0;
+  border-radius: 17px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  background-image: linear-gradient(to bottom,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(255, 255, 255, 0.25) 49%,
+    rgba(90, 190, 255, 0.35) 51%,
+    rgba(140, 240, 215, 0.55) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.90);
+  transition: all 180ms ease;
+}
+
+#workspace-1:hover,
+#workspace-2:hover,
+#workspace-3:hover,
+#workspace-4:hover,
+#workspace-5:hover,
+#workspace-6:hover,
+#workspace-7:hover,
+#workspace-8:hover,
+#workspace-9:hover,
+#workspace-10:hover {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95),
+              0 0 10px rgba(130, 225, 255, 0.90);
+}
+
+#custom-workspace-1,
+#custom-workspace-2,
+#custom-workspace-3,
+#custom-workspace-4,
+#custom-workspace-5,
+#custom-workspace-6,
+#custom-workspace-7,
+#custom-workspace-8,
+#custom-workspace-9,
+#custom-workspace-10 {
+  min-width: 42px;
+  min-height: 34px;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  color: #0a4466;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+#custom-workspace-1:hover,
+#custom-workspace-2:hover,
+#custom-workspace-3:hover,
+#custom-workspace-4:hover,
+#custom-workspace-5:hover,
+#custom-workspace-6:hover,
+#custom-workspace-7:hover,
+#custom-workspace-8:hover,
+#custom-workspace-9:hover,
+#custom-workspace-10:hover {
+  color: #ffffff;
+}
+
+#custom-workspace-1.active,
+#custom-workspace-2.active,
+#custom-workspace-3.active,
+#custom-workspace-4.active,
+#custom-workspace-5.active,
+#custom-workspace-6.active,
+#custom-workspace-7.active,
+#custom-workspace-8.active,
+#custom-workspace-9.active,
+#custom-workspace-10.active {
+  opacity: 1;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 70, 120, 0.60);
+  background: transparent;
+  box-shadow: none;
+}
+
+#workspaces image {
+  min-width: 22px;
+  min-height: 22px;
+}
+
+#workspaces.apps-1,
+#workspaces.apps-2,
+#workspaces.apps-3,
+#workspaces.apps-4,
+#workspaces.apps-5,
+#workspaces.apps-6,
+#workspaces.apps-7,
+#workspaces.apps-8,
+#workspaces.apps-9,
+#workspaces.apps-10 {
+  margin-left: -6px;
+}
+
+#workspaces.apps-1 button,
+#workspaces.apps-2 button,
+#workspaces.apps-3 button,
+#workspaces.apps-4 button,
+#workspaces.apps-5 button,
+#workspaces.apps-6 button,
+#workspaces.apps-7 button,
+#workspaces.apps-8 button,
+#workspaces.apps-9 button,
+#workspaces.apps-10 button {
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+#workspaces.apps-1 button label,
+#workspaces.apps-2 button label,
+#workspaces.apps-3 button label,
+#workspaces.apps-4 button label,
+#workspaces.apps-5 button label,
+#workspaces.apps-6 button label,
+#workspaces.apps-7 button label,
+#workspaces.apps-8 button label,
+#workspaces.apps-9 button label,
+#workspaces.apps-10 button label {
+  margin: 0;
+  padding: 0;
+}
+
+#workspaces .taskbar-window {
+  min-width: 22px;
+  min-height: 22px;
+  margin: 5px 0 0;
+  padding: 0;
+  border-radius: 4px;
+  background: transparent;
+}
+
+/* ---------- barra superior ---------- */
+#custom-launcher {
+  min-width: 26px;
+  min-height: 26px;
+  margin: 3px 6px;
+  padding: 0 1px 0 0;
+  border-radius: 14px;
+  font-size: 15px;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 70, 120, 0.60);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  background-image: linear-gradient(to bottom,
+    rgba(255, 255, 255, 0.90) 0%,
+    rgba(150, 235, 215, 0.55) 49%,
+    rgba(30, 170, 190, 0.90) 51%,
+    rgba(70, 225, 150, 0.95) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95),
+              0 0 8px rgba(110, 230, 200, 0.80);
+  transition: all 180ms ease;
+}
+
+#custom-control,
+#custom-notifications,
+#custom-settings,
+#custom-bluetooth {
+  min-width: 24px;
+  margin: 0;
+  padding: 0 9px;
+  color: #07537a;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+  border-left: 1px solid rgba(60, 150, 200, 0.3);
+  transition: all 180ms ease;
+}
+
+#mpris {
+  min-width: 280px;
+  padding: 0 10px;
+  color: #07537a;
+  border-left: 1px solid rgba(60, 150, 200, 0.30);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+#custom-player-prev,
+#custom-player-toggle,
+#custom-player-next {
+  min-width: 24px;
+  padding: 0 5px;
+  color: #07537a;
+}
+
+#mpris:hover {
+  color: #007b9e;
+  text-shadow: 0 0 8px rgba(100, 220, 255, 0.9);
+}
+
+#custom-control:hover,
+#custom-notifications:hover,
+#custom-settings:hover,
+#custom-bluetooth:hover {
+  color: #007b9e;
+  text-shadow: 0 0 8px rgba(100, 220, 255, 0.9);
+}
+
+#custom-notifications.paused { color: #b34a63; }
+#custom-notifications.has-waiting { color: #176f9d; }
+
+
+#custom-launcher:hover {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95),
+              0 0 14px rgba(140, 255, 220, 1);
+}
+
+#status {
+  margin: 4px 2px;
+  padding: 0 4px;
+  border-radius: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  background-image: linear-gradient(to bottom,
+    rgba(255, 255, 255, 0.70) 0%,
+    rgba(255, 255, 255, 0.25) 100%);
+}
+
+#clock,
+#pulseaudio,
+#network,
+#custom-bluetooth,
+#cpu,
+#memory,
+#tray {
+  margin: 0;
+  padding: 0 10px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.80);
+}
+
+#pulseaudio,
+#network,
+#custom-bluetooth,
+#cpu,
+#memory,
+#tray {
+  border-left: 1px solid rgba(60, 150, 200, 0.30);
+}
+
+#pulseaudio { padding-left: 16px; padding-right: 16px; }
+
+#custom-bluetooth {
+  padding-left: 14px;
+}
+
+#cpu,
+#memory {
+  color: #176f78;
+  border-left: 1px solid rgba(60, 150, 200, 0.30);
+}
+
+#clock {
+  font-size: 14px;
+}
+
+#pulseaudio.muted {
+  opacity: 0.6;
+}
+
+#network.disconnected {
+  color: #b34a00;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+}
+
+/* ---------- tooltip ---------- */
+tooltip {
+  background: rgba(235, 248, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+}
+
+tooltip label {
+  color: #0a3a5a;
+}
