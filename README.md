@@ -39,7 +39,7 @@ Atalhos adicionados:
 - `Super+1` a `Super+9`: trocar workspace; com `Shift`, mover a janela
 - `Super+setas`: foco; com `Shift`, mover a janela
 
-O painel Frutiger Aero tambem inclui luz noturna, nao perturbe, conexao de redes conhecidas/novas, pareamento de dispositivos, brilho, player, screenshot, launcher e sessao. A tela bloqueia apos 10 minutos de inatividade e apaga apos 15 minutos. Quando o globo e levado ao centro da tela, ele mostra os paises visiveis com continente e populacao estimada; essa camada fica oculta quando o globo esta na Waybar.
+O painel Frutiger Aero tambem inclui luz noturna, nao perturbe, conexao de redes conhecidas/novas, pareamento de dispositivos, brilho, player, screenshot, launcher e sessao. A tela bloqueia apos 10 minutos de inatividade e apaga apos 15 minutos. Quando o globo e levado ao centro da tela, ele mostra os paises visiveis com continente e horario local; essa camada fica oculta quando o globo esta na Waybar.
 
 ## Limpar configuracoes
 
