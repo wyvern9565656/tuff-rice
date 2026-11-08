@@ -1,6 +1,6 @@
 # UltimaDesk
 
-Rice Frutiger Aero para Arch Linux/EndeavourOS com Hyprland.
+Rice Frutiger Aero para Arch Linux(ou qualquer distro arch based) com Hyprland.
 
 ## Instalacao
 
