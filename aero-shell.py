@@ -265,6 +265,7 @@ class ControlCenter(Gtk.ApplicationWindow):
             "opacity": 100,
             "color": "62b9e8",
             "land_color": "ffffff",
+            "show_info": True,
         }
         try:
             for line in GLOBE_SETTINGS_PATH.read_text(encoding="utf-8").splitlines():
@@ -273,6 +274,9 @@ class ControlCenter(Gtk.ApplicationWindow):
                     settings[key] = value.strip()
         except OSError:
             pass
+        settings["show_info"] = str(settings["show_info"]).strip().lower() not in (
+            "0", "false", "off", "no"
+        )
         try:
             settings["speed"] = min(40.0, max(0.0, float(settings["speed"])))
         except (TypeError, ValueError):
@@ -295,6 +299,17 @@ class ControlCenter(Gtk.ApplicationWindow):
     def _build_globe(self):
         self._section("Aparencia e movimento")
         settings = self._read_globe_settings()
+
+        info_row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+        info_label = Gtk.Label(label="Informações do globo", xalign=0)
+        info_label.set_hexpand(True)
+        self.globe_info_switch = Gtk.Switch()
+        self.globe_info_switch.set_active(settings["show_info"])
+        self.globe_info_switch.set_tooltip_text("Mostrar ou ocultar informações dos países")
+        self.globe_info_switch.connect("notify::active", self._globe_info_changed)
+        info_row.pack_start(info_label, True, True, 0)
+        info_row.pack_start(self.globe_info_switch, False, False, 0)
+        self.content.pack_start(info_row, False, False, 0)
 
         self.globe_speed_value = Gtk.Label(label="%.0f°/s" % settings["speed"])
         self.globe_speed_scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, 0, 40, 1)
@@ -356,6 +371,9 @@ class ControlCenter(Gtk.ApplicationWindow):
     def _globe_color_changed(self, _button):
         self._schedule_globe_save()
 
+    def _globe_info_changed(self, _switch, _property):
+        self._schedule_globe_save()
+
     def _schedule_globe_save(self):
         if self.globe_save_timeout:
             GLib.source_remove(self.globe_save_timeout)
@@ -373,6 +391,7 @@ class ControlCenter(Gtk.ApplicationWindow):
         values = (
             "speed=%.1f\n" % self.globe_speed_scale.get_value()
             + "opacity=%d\n" % self.globe_opacity_scale.get_value()
+            + "show_info=%d\n" % self.globe_info_switch.get_active()
             + "color=%s\n" % color_hex(self.globe_color_button)
             + "land_color=%s\n" % color_hex(self.globe_land_color_button)
         )

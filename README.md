@@ -2,6 +2,18 @@
 
 Rice Frutiger Aero para Arch Linux(ou qualquer distro arch based) com Hyprland.
 
+## Capturas de tela
+
+Uma visão do desktop, do globo interativo e do Centro de controle.
+
+![Desktop UltimaDesk com o globo na lateral](assets/screenshots/imagem.png)
+
+![Globo interativo centralizado](assets/screenshots/imagem1.png)
+
+![Globo centralizado com informações locais dos países](assets/screenshots/imagem2.png)
+
+![Centro de controle aberto sobre o desktop](assets/screenshots/imagem3.png)
+
 ## Instalacao
 
 Pode executar em qualquer sessao, não precisa estar dentro do hyprland); nao precisa abrir o Hyprland antes. Dentro desta pasta, rode:

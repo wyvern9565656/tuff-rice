@@ -54,6 +54,7 @@ static char settings_path[512];
 static struct stat settings_snapshot;
 static int settings_snapshot_ready = 0;
 static float globe_opacity = 1.0f;
+static int show_globe_info = 1;
 static uint32_t globe_color_rgb = 0x62b9e8;
 static uint32_t globe_land_color_rgb = 0xffffff;
 static int hypr_events = -1;
@@ -923,7 +924,7 @@ static void render_buffer(uint32_t *pixels) {
         double center_x = surface_x + globe_cx;
         double center_y = surface_y + globe_cy;
         double distance = hypot(center_x - dock_cx, center_y - dock_cy);
-        clip_boundary -= 32.0 * fmin(1.0, distance / R);
+        clip_boundary -= 16.0 * fmin(1.0, distance / R);
     }
     int clip_x = (docked || returning_to_dock)
         ? (int)ceil(clip_boundary - surface_x) : 0;
@@ -932,7 +933,7 @@ static void render_buffer(uint32_t *pixels) {
         for (int y = 0; y < H; y++)
             memset(pixels + (size_t)y * W, 0, (size_t)clip_x * sizeof(*pixels));
     }
-    if (globe_is_centered()) {
+    if (globe_is_centered() && show_globe_info) {
         if (outside_x >= 300) render_centered_network(pixels);
         else render_country_atlas(pixels);
     }
@@ -947,6 +948,7 @@ static void load_globe_settings(void) {
     char line[128];
     while (fgets(line, sizeof line, file)) {
         double value;
+        int show_info;
         if (sscanf(line, "speed=%lf", &value) == 1) {
             if (value < 0.0) value = 0.0;
             if (value > 40.0) value = 40.0;
@@ -955,6 +957,8 @@ static void load_globe_settings(void) {
             if (value < 20.0) value = 20.0;
             if (value > 100.0) value = 100.0;
             globe_opacity = (float)(value / 100.0);
+        } else if (sscanf(line, "show_info=%d", &show_info) == 1) {
+            show_globe_info = show_info != 0;
         } else if (strncmp(line, "color=", 6) == 0) {
             char *end = NULL;
             unsigned long color = strtoul(line + 6, &end, 16);

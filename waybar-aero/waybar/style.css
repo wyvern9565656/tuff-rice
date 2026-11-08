@@ -19,14 +19,19 @@ window#waybar {
 /* ---------- vidro das barras ---------- */
 window#waybar.topbar {
   border-radius: 17px 17px 17px 0;
-  background-image: linear-gradient(to bottom,
-    rgba(255, 255, 255, 0.92) 0%,
-    rgba(214, 243, 255, 0.78) 49%,
-    rgba(160, 220, 250, 0.72) 51%,
-    rgba(185, 242, 228, 0.78) 100%);
+  background-image: linear-gradient(to right,
+      transparent 0%, transparent 5.325%, rgba(255, 255, 255, 0.80) 5.325%),
+    linear-gradient(to bottom,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(214, 243, 255, 0.78) 49%,
+      rgba(160, 220, 250, 0.72) 51%,
+      rgba(185, 242, 228, 0.78) 100%);
   border: 1px solid rgba(255, 255, 255, 0.80);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.90),
-              inset 0 -1px 0 rgba(60, 150, 200, 0.35);
+  border-bottom: 0;
+  background-size: 100% 1px, 100% 100%;
+  background-position: left bottom, center;
+  background-repeat: no-repeat;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.90);
 }
 
 window#waybar.side {
@@ -38,6 +43,7 @@ window#waybar.side {
     rgba(160, 220, 250, 0.44) 51%,
     rgba(185, 242, 228, 0.56) 100%);
   border: 1px solid rgba(255, 255, 255, 0.80);
+  border-top: 0;
   box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.90),
               inset -1px 0 0 rgba(60, 150, 200, 0.35);
 }
@@ -107,7 +113,7 @@ window#waybar.side {
 #workspace-8,
 #workspace-9,
 #workspace-10 {
-  min-width: 64px;
+  min-width: 52px;
   min-height: 34px;
   margin: 5px 0;
   padding: 0;
@@ -146,11 +152,12 @@ window#waybar.side {
 #custom-workspace-8,
 #custom-workspace-9,
 #custom-workspace-10 {
-  min-width: 42px;
+  min-width: 40px;
   min-height: 34px;
   margin: 0;
-  padding: 0;
-  border-radius: 0;
+  padding: 0 30px 0 0;
+  border: 1px solid transparent;
+  border-radius: 17px;
   color: #0a4466;
   border: 0;
   background: transparent;
@@ -180,11 +187,17 @@ window#waybar.side {
 #custom-workspace-8.active,
 #custom-workspace-9.active,
 #custom-workspace-10.active {
+  border-color: rgba(255, 255, 255, 0.98);
   opacity: 1;
   color: #ffffff;
-  text-shadow: 0 1px 2px rgba(0, 70, 120, 0.60);
-  background: transparent;
-  box-shadow: none;
+  text-shadow: 0 1px 2px rgba(0, 70, 120, 0.70);
+  background-image: linear-gradient(to bottom,
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(150, 225, 255, 0.58) 48%,
+    rgba(30, 150, 240, 0.92) 52%,
+    rgba(60, 215, 185, 0.98) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.98),
+              0 0 12px rgba(110, 220, 255, 0.92);
 }
 
 #workspaces image {
@@ -202,7 +215,7 @@ window#waybar.side {
 #workspaces.apps-8,
 #workspaces.apps-9,
 #workspaces.apps-10 {
-  margin-left: -6px;
+  margin-left: -46px;
 }
 
 #workspaces.apps-1 button,

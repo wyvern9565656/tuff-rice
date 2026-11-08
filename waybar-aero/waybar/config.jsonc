@@ -3,8 +3,8 @@
     "name": "side",
     "layer": "top",
     "position": "left",
-    "width": 85,
-    "margin": "39 0 8 8",
+    "width": 72,
+    "margin": "40 0 8 8",
     "exclusive": true,
     "reload_style_on_change": true,
     "modules-center": [
@@ -335,7 +335,7 @@
     "layer": "top",
     "position": "top",
     "height": 34,
-    "margin": "6 8 0 -85",
+    "margin": "6 8 0 -72",
     "spacing": 8,
     "exclusive": true,
     "modules-left": [
