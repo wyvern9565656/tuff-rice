@@ -4,7 +4,7 @@ Rice Frutiger Aero para Arch Linux(ou qualquer distro arch based) com Hyprland.
 
 ## Instalacao
 
-Pode executar do Plasma ou de qualquer outra sessao; nao precisa abrir o Hyprland antes. Dentro desta pasta, rode:
+Pode executar em qualquer sessao, não precisa estar dentro do hyprland); nao precisa abrir o Hyprland antes. Dentro desta pasta, rode:
 
 ```bash
 ./install.sh
