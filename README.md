@@ -22,7 +22,9 @@ Pode executar em qualquer sessão, sem precisar abrir o Hyprland antes. Na pasta
 ./install.sh
 ```
 
-O instalador instala as dependências do rice, ativa NetworkManager/Bluetooth/PipeWire, configura Waybar e notificações, gera um wallpaper e compila o globo quando os dados Natural Earth estão disponíveis. Por padrão, integra o Hyprland pelo modo Lua, escrevendo apenas blocos gerenciados nos arquivos `hyprland.lua` e `ultimadesk.lua`. Para escolher a configuração `.conf`, rode `./install.sh --hypr-mode conf`; esse modo tenta detectar o monitor ativo pelo KScreen e usa o modo preferido como alternativa. Os arquivos `install-waybar.sh`, `ultimadesk-setup/install.sh` e `waybar-aero/globo-layer/build.sh` encaminham para o instalador principal.
+O instalador verifica os pacotes já presentes e mostra quais serviços estão ativos e quais serão habilitados antes de fazer alterações. Para consultar esse resumo sem instalar pacotes ou ativar serviços, rode `./install.sh --plan`.
+
+O Hyprland 0.57 removeu suporte a configurações legadas; por isso, o UltimaDesk passou a usar Lua. Esse é o modo padrão e grava apenas blocos gerenciados em `hyprland.lua` e `ultimadesk.lua`, sem criar `hyprland.conf`. A opção `./install.sh --hypr-mode conf` ficou somente para instalações antigas, anteriores ao Hyprland 0.57; não a use para uma instalação nova no 0.57 ou posterior. Os arquivos `install-waybar.sh`, `ultimadesk-setup/install.sh` e `waybar-aero/globo-layer/build.sh` encaminham para o instalador principal.
 
 Firefox, Kitty e Thunar são opcionais e não são instalados por padrão. Para incluí-los, use `./install.sh --install-optional-apps`. Os atalhos `Super+Enter` e `Super+E` abrem Kitty e Thunar, respectivamente; precisam estar instalados ou ser adaptados para os aplicativos que você já usa. O navegador padrão é aberto por `xdg-open`.
 

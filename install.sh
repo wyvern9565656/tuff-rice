@@ -9,6 +9,7 @@ CONFIG="$HOME_CONFIG/waybar-aero"
 DATA="$HOME/.local/share/ultimadesk"
 MODE=lua
 INSTALL_OPTIONAL_APPS=false
+PLAN_ONLY=false
 
 usage() {
   cat <<'USAGE'
@@ -16,7 +17,8 @@ Uso: ./install.sh [opcoes]
 
 Opcoes:
   --install-optional-apps  Instala Firefox, Kitty e Thunar
-  --hypr-mode MODE         Usa lua (padrao) ou conf para configurar Hyprland
+  --hypr-mode MODE         Usa lua (padrao) ou conf legado (Hyprland < 0.57)
+  --plan                   Mostra pacotes e servicos sem fazer alteracoes
   -h, --help               Mostra esta ajuda
 
 Sem --install-optional-apps, os aplicativos de usuario nao sao instalados.
@@ -27,6 +29,10 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --install-optional-apps)
       INSTALL_OPTIONAL_APPS=true
+      shift
+      ;;
+    --plan)
+      PLAN_ONLY=true
       shift
       ;;
     --hypr-mode)
@@ -63,7 +69,6 @@ if ! command -v pacman >/dev/null 2>&1; then
   exit 1
 fi
 
-echo "==> Instalando dependencias do rice e controles..."
 required_packages=(
   base-devel brightnessctl bluez bluez-utils cliphist curl dunst gcc grim gtk3 hypridle imagemagick \
   hyprlock libnotify networkmanager pipewire pipewire-pulse playerctl \
@@ -76,8 +81,76 @@ if [[ "$INSTALL_OPTIONAL_APPS" == true ]]; then
   packages+=("${optional_apps[@]}")
   echo "Aplicativos opcionais selecionados: ${optional_apps[*]}"
 else
-  echo "Firefox, Kitty e Thunar foram ignorados. Para instala-los, use --install-optional-apps."
+  echo "Aplicativos opcionais nao selecionados: ${optional_apps[*]}"
 fi
+
+mapfile -t installed_package_names < <(pacman -Qq)
+declare -A installed_package_set=()
+for package in "${installed_package_names[@]}"; do
+  installed_package_set["$package"]=1
+done
+installed_packages=()
+missing_packages=()
+for package in "${packages[@]}"; do
+  if [[ -n "${installed_package_set[$package]:-}" ]]; then
+    installed_packages+=("$package")
+  else
+    missing_packages+=("$package")
+  fi
+done
+
+print_package_list() {
+  local heading="$1"
+  shift
+  printf '%s (%d):\n' "$heading" "$#"
+  if [[ "$#" -eq 0 ]]; then
+    echo "  nenhum"
+  else
+    printf '  %s\n' "$@"
+  fi
+}
+
+service_plan() {
+  local scope="$1" unit="$2" active enabled active_status enabled_status action
+  local -a systemctl_command=(systemctl)
+  if [[ "$scope" == user ]]; then
+    systemctl_command+=(--user)
+  fi
+  active="$("${systemctl_command[@]}" is-active "$unit" 2>/dev/null || true)"
+  enabled="$("${systemctl_command[@]}" is-enabled "$unit" 2>/dev/null || true)"
+  if [[ "$active" == active ]]; then
+    active_status="ativo"
+  else
+    active_status="inativo"
+  fi
+  if [[ "$enabled" == enabled || "$enabled" == enabled-runtime ]]; then
+    enabled_status="habilitado"
+  else
+    enabled_status="desabilitado/indisponivel"
+  fi
+  if [[ "$active" == active && ( "$enabled" == enabled || "$enabled" == enabled-runtime ) ]]; then
+    action="sem alteracao"
+  else
+    action="sera habilitado e iniciado"
+  fi
+  printf '  %s (%s): %s, %s; %s\n' "$unit" "$scope" "$active_status" "$enabled_status" "$action"
+}
+
+echo "==> Resumo antes de alterar o sistema (modo Hyprland: $MODE)..."
+print_package_list "Pacotes ja instalados" "${installed_packages[@]}"
+print_package_list "Pacotes que faltam" "${missing_packages[@]}"
+echo "Servicos que serao verificados/ativados apos instalar os pacotes:"
+service_plan system NetworkManager.service
+service_plan system bluetooth.service
+service_plan user pipewire.socket
+service_plan user pipewire-pulse.socket
+service_plan user wireplumber.service
+if [[ "$PLAN_ONLY" == true ]]; then
+  echo "Plano concluido; nenhuma instalacao, ativacao de servico ou alteracao de arquivo foi feita."
+  exit 0
+fi
+
+echo "==> Instalando dependencias do rice e controles..."
 sudo pacman -S --needed --noconfirm "${packages[@]}"
 
 echo "==> Ativando NetworkManager, Bluetooth e audio..."
