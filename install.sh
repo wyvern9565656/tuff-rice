@@ -7,6 +7,52 @@ HOME_CONFIG="$HOME/.config"
 HYPR="$HOME_CONFIG/hypr"
 CONFIG="$HOME_CONFIG/waybar-aero"
 DATA="$HOME/.local/share/ultimadesk"
+MODE=lua
+INSTALL_OPTIONAL_APPS=false
+
+usage() {
+  cat <<'USAGE'
+Uso: ./install.sh [opcoes]
+
+Opcoes:
+  --install-optional-apps  Instala Firefox, Kitty e Thunar
+  --hypr-mode MODE         Usa lua (padrao) ou conf para configurar Hyprland
+  -h, --help               Mostra esta ajuda
+
+Sem --install-optional-apps, os aplicativos de usuario nao sao instalados.
+USAGE
+}
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --install-optional-apps)
+      INSTALL_OPTIONAL_APPS=true
+      shift
+      ;;
+    --hypr-mode)
+      if [[ $# -lt 2 ]]; then
+        echo "Falta o valor de --hypr-mode (lua ou conf)." >&2
+        exit 2
+      fi
+      MODE="$2"
+      shift 2
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      printf 'Opcao desconhecida: %s\n' "$1" >&2
+      usage >&2
+      exit 2
+      ;;
+  esac
+done
+
+if [[ "$MODE" != lua && "$MODE" != conf ]]; then
+  echo "Modo Hyprland invalido: $MODE (use lua ou conf)." >&2
+  exit 2
+fi
 
 if [[ "$EUID" -eq 0 ]]; then
   echo "Execute como usuario normal; o instalador usa sudo quando necessario."
@@ -17,14 +63,22 @@ if ! command -v pacman >/dev/null 2>&1; then
   exit 1
 fi
 
-MODE=lua
-
 echo "==> Instalando dependencias do rice e controles..."
-sudo pacman -S --needed --noconfirm \
+required_packages=(
   base-devel brightnessctl bluez bluez-utils cliphist curl dunst gcc grim gtk3 hypridle imagemagick \
-  firefox hyprlock kitty libnotify networkmanager pipewire pipewire-pulse playerctl \
-  jq pkgconf python-gobject python-pillow rofi-wayland slurp socat swaybg thunar ttf-jetbrains-mono-nerd \
+  hyprlock libnotify networkmanager pipewire pipewire-pulse playerctl \
+  jq pkgconf python-gobject python-pillow rofi-wayland slurp socat swaybg ttf-jetbrains-mono-nerd \
   ttf-opensans waybar wayland wayland-protocols wlr-protocols wl-clipboard wireplumber xdg-utils
+)
+optional_apps=(firefox kitty thunar)
+packages=("${required_packages[@]}")
+if [[ "$INSTALL_OPTIONAL_APPS" == true ]]; then
+  packages+=("${optional_apps[@]}")
+  echo "Aplicativos opcionais selecionados: ${optional_apps[*]}"
+else
+  echo "Firefox, Kitty e Thunar foram ignorados. Para instala-los, use --install-optional-apps."
+fi
+sudo pacman -S --needed --noconfirm "${packages[@]}"
 
 echo "==> Ativando NetworkManager, Bluetooth e audio..."
 sudo systemctl enable --now NetworkManager.service bluetooth.service
@@ -211,7 +265,8 @@ fi
 
 echo
 echo "Instalacao concluida. O rice iniciara na proxima sessao Hyprland."
-echo "Centro de controle: Super+I | Aplicativos: Super+D | Terminal: Super+Enter"
+echo "Centro de controle: Super+I | Aplicativos: Super+D | Terminal: Super+Enter (Kitty opcional)"
+echo "Arquivos: Super+E (Thunar opcional)"
 echo "Wi-Fi, Bluetooth, audio, brilho, clipboard, captura e bloqueio estao no painel/atalhos."
 if [[ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]]; then
   "$CONFIG/start-rice.sh" >/dev/null 2>&1 &

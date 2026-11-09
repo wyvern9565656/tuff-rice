@@ -16,13 +16,15 @@ Uma visão do desktop, do globo interativo e do Centro de controle.
 
 ## Instalacao
 
-Pode executar em qualquer sessao, não precisa estar dentro do hyprland); nao precisa abrir o Hyprland antes. Dentro desta pasta, rode:
+Pode executar em qualquer sessão, sem precisar abrir o Hyprland antes. Na pasta do projeto, rode:
 
 ```bash
 ./install.sh
 ```
 
-O instalador unico instala as dependencias, ativa NetworkManager/Bluetooth/PipeWire, configura Waybar e notificacoes, gera um wallpaper, compila o globo quando os dados Natural Earth estao disponiveis e integra a inicializacao ao Hyprland. Se nao houver configuracao Hyprland, cria uma configuracao `.conf` minima com o rice e detecta o modo de monitor ativo pelo KScreen; ao executar pelo Plasma, tudo fica preparado para a proxima entrada no Hyprland. Os arquivos `install-waybar.sh`, `ultimadesk-setup/install.sh` e `waybar-aero/globo-layer/build.sh` agora encaminham para esse mesmo instalador.
+O instalador instala as dependências do rice, ativa NetworkManager/Bluetooth/PipeWire, configura Waybar e notificações, gera um wallpaper e compila o globo quando os dados Natural Earth estão disponíveis. Por padrão, integra o Hyprland pelo modo Lua, escrevendo apenas blocos gerenciados nos arquivos `hyprland.lua` e `ultimadesk.lua`. Para escolher a configuração `.conf`, rode `./install.sh --hypr-mode conf`; esse modo tenta detectar o monitor ativo pelo KScreen e usa o modo preferido como alternativa. Os arquivos `install-waybar.sh`, `ultimadesk-setup/install.sh` e `waybar-aero/globo-layer/build.sh` encaminham para o instalador principal.
+
+Firefox, Kitty e Thunar são opcionais e não são instalados por padrão. Para incluí-los, use `./install.sh --install-optional-apps`. Os atalhos `Super+Enter` e `Super+E` abrem Kitty e Thunar, respectivamente; precisam estar instalados ou ser adaptados para os aplicativos que você já usa. O navegador padrão é aberto por `xdg-open`.
 
 As configuracoes existentes do Waybar sao copiadas para arquivos `.backup-*` quando diferem das padroes. Wallpapers ja existentes sao preservados. Um `ultimadesk.conf` ou `ultimadesk.lua` antigo e guardado como backup antes da migracao. O instalador encerra o globo Raylib e paineis antigos, instala o globo transparente em Wayland layer-shell e reinicia o rice se chamado dentro da sessao.
 
@@ -55,7 +57,7 @@ O painel Frutiger Aero tambem inclui luz noturna, nao perturbe, conexao de redes
 
 ## Limpar configuracoes
 
-Para apagar, sem backup, todas as configuracoes em `~/.config/hypr` e os diretórios de rice/painel relacionados, rode `./limpar.sh`. Isso tambem encerra os paineis ativos e remove os dados instalados em `~/.local/share/ultimadesk`; nao remove configuracoes de outros aplicativos, como terminal ou GTK. A pasta do Hyprland nao sera recriada: rode `./install.sh` depois para instalar o rice novamente.
+O limpador remove apenas os arquivos do UltimaDesk, preserva o restante da configuração do Hyprland e não encerra Waybar, Dunst ou outras ferramentas compartilhadas. Por padrão, pede confirmação e cria backup em `~/.local/state/ultimadesk-backups/`. Faça uma prévia com `./limpar.sh --dry-run`; use `./limpar.sh --yes` para confirmar sem prompt. `--no-backup` desativa o backup explicitamente.
 
 ## Requisitos
 
